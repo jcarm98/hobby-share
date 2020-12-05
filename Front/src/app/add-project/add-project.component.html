@@ -1,0 +1,137 @@
+<div class="container">
+
+  <h1>{{heading}}</h1>
+
+  <!--Closable alert if set-->
+  <ngb-alert *ngIf="alert !== undefined"
+             [type]="alert.type"
+             (close)="setAlert(-1, '')"
+             style="white-space: pre-line">
+    {{alert.message}}
+  </ngb-alert>
+
+  <div class="row form-group">
+    <label class="col-form-label col-sm-2">Name</label>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             placeholder="Name"
+             [(ngModel)]="name" />
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <label class="col-form-label col-sm-2">Purpose</label>
+    <div class="col-sm-5">
+      <textarea id="purposeInput"
+                class="form-control"
+                [(ngModel)]="purpose"
+                placeholder="Purpose"
+                rows="4"></textarea>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <label class="col-form-label col-sm-2">Plan</label>
+    <div class="col-sm-5">
+      <textarea id="planInput"
+                class="form-control"
+                [(ngModel)]="plan"
+                placeholder="Plan"
+                rows="4"></textarea>
+    </div>
+  </div>
+
+  <!--Skill builder component-->
+  <app-skills [skills]="skills"
+              [readOnly]="false"></app-skills>
+
+  <!--Hidden default file input with file selection handling-->
+  <input #res1Input
+         id="res1"
+         type="file"
+         accept="image/*"
+         (change)="onFileSelect($event, true)"
+         style="display:none;" />
+
+  <!--Hidden default file input with file selection handling-->
+  <input #res2Input
+         id="res2"
+         type="file"
+         accept="image/*"
+         (change)="onFileSelect($event, false)"
+         style="display:none;" />
+
+  <!--Custom file input-->
+  <div class="form-group row">
+    <label class="col-form-label col-sm-2">Resource 1</label>
+    <div class="col-sm-5">
+      <div class="input-group">
+
+        <input readonly
+               class="form-control"
+               placeholder="Resource 1"
+               value="{{res1Name}}" />
+        <div class="input-group-append">
+
+          <!--Custom file input browse button uses angular template system-->
+          <button class="btn btn-secondary"
+                  (click)="res1Input.click()">
+            Browse
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!--File too big error-->
+    <div *ngIf="res1TooBig"
+         class="col-sm col-form-label text-danger"
+         style="font-size: 0.8rem">
+      Sorry! The maximum file size is 1 MB.
+    </div>
+
+  </div>
+
+  <!--Custom file input-->
+  <div class="form-group row">
+    <label class="col-form-label col-sm-2">Resource 2</label>
+    <div class="col-sm-5">
+      <div class="input-group">
+
+        <input readonly
+               class="form-control"
+               placeholder="Resource 2"
+               value="{{res2Name}}" />
+        <div class="input-group-append">
+
+          <!--Custom file input browse button uses angular template system-->
+          <button class="btn btn-secondary"
+                  (click)="res2Input.click()">
+            Browse
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!--File too big error-->
+    <div *ngIf="res2TooBig"
+         class="col-sm col-form-label text-danger"
+         style="font-size: 0.8rem">
+      Sorry! The maximum file size is 1 MB.
+    </div>
+
+  </div>
+
+  <!--Offset sign up button-->
+  <div class="row">
+    <div class="col-sm offset-sm-2">
+      <button class="btn btn-primary"
+              (click)="addProject()">
+        Create Project
+      </button>
+    </div>
+  </div>
+
+</div>
