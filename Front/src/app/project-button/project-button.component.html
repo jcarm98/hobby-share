@@ -1,0 +1,188 @@
+<div (window:resize)="onResize($event)">
+
+  <div *ngIf="mobileMode">
+
+    <div class="row">
+
+      <a href="project/{{projects[i].id}}"
+         class="col p-2">
+
+        <div class="btn btn-outline-dark px-4 "
+             style="height: 100%; width: 100%;">
+
+          <h5>{{projects[i].name}}</h5>
+          <div *ngIf="projects[i].res1"
+               class="d-flex justify-content-center align-items-center bg-dark align-self-center"
+               style="height: 30vh;">
+
+            <img [src]="projects[i].res1"
+                 style="display: inline-block; max-width: 100%; max-height: 100%;" />
+
+          </div>
+
+          <div *ngIf="projects[i].res1 === undefined"
+               class="bg-secondary row no-gutters"
+               style="max-height: 400px;">
+
+            <h1 class="col"
+                style="font-size: 10vw;">
+              {{projects[i].name.charAt(0) | uppercase}}
+            </h1>
+
+          </div>
+
+          Date Created: {{projects[i].date_created}}
+          <br />
+          Last Updated: {{projects[i].last_updated}}
+          <br />
+          <div *ngIf="!(owner)">
+            By: {{projects[i].owner}}
+          </div>
+          Status: <span class="badge badge-primary">{{projects[i].status}}</span>
+        </div>
+
+      </a>
+
+    </div>
+  </div>
+
+  <div *ngIf="!(mobileMode)">
+    <div *ngIf="i <= projects.length/3"
+         class="row mb-3">
+
+
+
+      <a *ngIf="3 * i < projects.length"
+         href="project/{{projects[3 * i].id}}"
+         class="col-4 pr-2">
+
+        <div class="btn btn-outline-dark px-4"
+             style="height: 100%; width: 100%;">
+
+          <h5>{{projects[3 * i].name}}</h5>
+
+          <div *ngIf="projects[3 * i].res1"
+               class="bg-dark d-flex justify-content-center align-items-center"
+               style="max-width: 25vw; height: 25vh; ">
+            <img [src]="projects[3 * i].res1"
+                 style="display: inline-block; max-width: 100%; max-height: 100%;" />
+          </div>
+
+          <div *ngIf="projects[3 * i].res1 === undefined"
+               class="bg-secondary row no-gutters"
+               style="max-width: 400px; max-height: 400px;">
+
+            <h1 class="col d-flex justify-content-center align-self-center"
+                style="font-size: 10vw;">
+              {{projects[3 * i].name.charAt(0) | uppercase}}
+            </h1>
+
+          </div>
+
+          Date Created: {{projects[3 * i].date_created}}
+          <br />
+          Last Updated: {{projects[3 * i].last_updated}}
+          <br />
+          <div *ngIf="!(owner)">
+            By: {{projects[3 * i].owner}}
+          </div>
+          Status: <span class="badge badge-primary">{{projects[3 * i].status}}</span>
+        </div>
+
+      </a>
+
+
+
+
+      <a *ngIf="3 * i +1 < projects.length"
+         href="project/{{projects[3 * i+1].id}}"
+         class="col-4 px-2">
+
+        <div class="btn btn-outline-dark px-4"
+             style="height: 100%; width: 100%;">
+
+          <h5>{{projects[3 * i+1].name}}</h5>
+
+          <div *ngIf="projects[3 * i+1].res1"
+               class="bg-dark d-flex justify-content-center align-items-center"
+               style="max-width: 25vw; height: 25vh;">
+
+            <img [src]="projects[3 * i+1].res1"
+                 style="display: inline-block; max-width: 100%; max-height: 100%;" />
+
+          </div>
+
+          <div *ngIf="projects[3 * i+1].res1 === undefined"
+               class="bg-secondary row no-gutters"
+               style="max-width: 400px; max-height: 400px;">
+
+            <h1 class="col d-flex justify-content-center align-self-center"
+                style="font-size: 10vw;">
+              {{projects[3 * i+1].name.charAt(0) | uppercase}}
+            </h1>
+
+          </div>
+
+          Date Created: {{projects[3 * i+1].date_created}}
+          <br />
+          Last Updated: {{projects[3 * i+1].last_updated}}
+          <br />
+          <div *ngIf="!(owner)">
+            By: {{projects[3 * i+1].owner}}
+          </div>
+          Status: <span class="badge badge-primary">{{projects[3 * i+1].status}}</span>
+        </div>
+
+      </a>
+
+
+
+
+      <a *ngIf="3 * i +2 < projects.length"
+         href="project/{{projects[3 * i+2].id}}"
+         class="col-4 pl-2">
+
+        <div class="btn btn-outline-dark px-4"
+             style="height: 100%; width: 100%;">
+
+          <h5>{{projects[3 * i+2].name}}</h5>
+
+          <div *ngIf="projects[3 * i+2].res1"
+               class="bg-dark d-flex justify-content-center align-items-center"
+               style="max-width: 25vw; height: 25vh;">
+
+            <img [src]="projects[3 * i+2].res1"
+                 style="display: inline-block; max-width: 100%; max-height: 100%;" />
+
+          </div>
+
+          <div *ngIf="projects[3 * i+2].res1 === undefined"
+               class="bg-secondary row no-gutters"
+               style="max-width: 400px; max-height: 400px;">
+
+            <h1 class="col d-flex justify-content-center align-self-center"
+                style="font-size: 10vw;">
+              {{projects[3 * i+2].name.charAt(0) | uppercase}}
+            </h1>
+
+          </div>
+
+          Date Created: {{projects[3 * i+2].date_created}}
+          <br />
+          Last Updated: {{projects[3 * i+2].last_updated}}
+          <br />
+          <div *ngIf="!(owner)">
+            By: {{projects[3 * i+2].owner}}
+          </div>
+          Status: <span class="badge badge-primary">{{projects[3 * i+2].status}}</span>
+        </div>
+
+      </a>
+
+
+
+    </div>
+
+  </div>
+
+</div>
