@@ -1,0 +1,35 @@
+<div class="container">
+  <h1 class="">{{ heading }}</h1>
+  <div *ngIf="success"
+       role="alert"
+       class="alert alert-success">
+    Your HobbyShare.app account has been successfully verified! You will be redirected to the log in page in 3 seconds.
+  </div>
+
+  <div *ngIf="fail"
+       role="alert"
+       class="alert alert-danger">
+    Your account verification token did not match any HobbyShare.app account.
+  </div>
+
+  <label class="">Enter your account verification token:</label>
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="input-group">
+
+        <div class="input-group-prepend">
+          <button class="btn btn-primary"
+                  (click)="verify()">
+            Verify
+          </button>
+        </div>
+        <input type="text"
+               class="form-control"
+               placeholder="Token"
+               [(ngModel)]="token">
+      </div>
+
+    </div>
+  </div>
+  
+</div>
