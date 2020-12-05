@@ -1,0 +1,58 @@
+<div class="container">
+
+  <h1>{{heading}}</h1>
+
+  <!--Closable alert if set-->
+  <ngb-alert *ngIf="alert !== undefined"
+             [type]="alert.type"
+             (close)="setAlert(-1, '')"
+             style="white-space: pre-line">
+    {{alert.message}}
+  </ngb-alert>
+
+  <!--Displays and binds input in inputs-->
+  <div *ngFor="let input of inputs; index as i"
+       class="form-group row">
+    <label class="col-form-label col-sm-2">{{input.label}}</label>
+
+    <!--All inputs but message are regular text input-->
+    <div *ngIf="input.id !== 'message'"
+         class="col-sm-5">
+      <input id="{{input.id}}"
+             class="form-control {{input.valid}}"
+             [(ngModel)]="input.value"
+             placeholder="{{input.label | titlecase}}"
+             type="text"
+             (change)="validate(i)" />
+    </div>
+    <!--Message is a textarea instead of a text input-->
+    <div *ngIf="input.id === 'message'"
+         class="col-sm-5">
+      <textarea id="{{input.id}}"
+                class="form-control {{input.valid}}"
+                [(ngModel)]="input.value"
+                placeholder="{{input.label | titlecase}}"
+                rows="10"
+                (change)="validate(i)"></textarea>
+    </div>
+
+    <!--Displays error for an input, if it has one-->
+    <div *ngIf="input.error !== ''"
+         class="col-sm col-form-label text-danger"
+         style="font-size: 0.8rem">
+      {{input.error}}
+    </div>
+
+  </div>
+
+  <!--Offset send button-->
+  <div class="row">
+    <div class="col-sm offset-sm-2">
+      <button class="btn btn-primary"
+              (click)="contact()">
+        Send
+      </button>
+    </div>
+  </div>
+
+</div>
