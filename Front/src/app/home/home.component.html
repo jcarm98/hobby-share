@@ -1,0 +1,18 @@
+<div class="container">
+
+  <div *ngIf="projects && projects.length !== 0">
+    <h1>{{heading}}</h1>
+    <div *ngFor="let project of projects; index as i">
+      <app-project-button [i]="i"
+                          [projects]="projects"
+                          [owner]="false">
+      </app-project-button>
+    </div>
+  </div>
+
+  <div *ngIf="!(projects) || projects.length === 0">
+    <h1>Projects Not Found</h1>
+    Couldn't load projects...
+  </div>
+
+</div>
