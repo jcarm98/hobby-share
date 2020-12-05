@@ -1,0 +1,51 @@
+<nav *ngIf="title" class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
+
+  <div class="container">
+
+    <a class="navbar-brand" routerLink="/">{{title}}</a>
+
+    <!--Collapsing hamburger button-->
+    <button class="navbar-toggler"
+            type="button"
+            (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Allows for collapsible header-->
+    <div class="collapse navbar-collapse flex-row-reverse"
+         [ngbCollapse]="isCollapsed">
+
+      <!--Keeps track of the active link, and fixes mobile and regular positioning-->
+      <ul ngbNav [(activeId)]="activeId"
+          class="navbar-nav flex-row float-right">
+
+        <!--Displays each link element-->
+        <li *ngFor="let link of links; index as i"
+            class="nav-item p-1"
+            [ngbNavItem]="i">
+
+          <!--Regular link elements-->
+          <a *ngIf="link.route !== '/log-out'"
+             routerLink="{{link.route}}"
+             class="nav-link"
+             ngbNavLink>
+            {{link.text}}
+          </a>
+
+          <!--Log out button-->
+          <a *ngIf="link.route === '/log-out'"
+             class="nav-link"
+             ngbNavLink
+             (click)="logout()">
+            {{link.text}}
+          </a>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
