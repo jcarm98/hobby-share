@@ -1,0 +1,41 @@
+<div *ngIf="!readOnly"
+     class="form-group row">
+  <div class="col-sm-2">
+    <label class="col-form-label">Skills</label>
+  </div>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input [(ngModel)]="skill"
+             placeholder="Skill"
+             class="form-control" />
+      <div class="input-group-append">
+        <button (click)="addSkill()"
+                class="btn btn-secondary">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!readOnly"
+     class="d-flex flex-row flex-wrap offset-sm-2">
+  <div *ngFor="let skill of skills; index as i"
+       class="pl-1 pr-1 pb-2">
+    <button [ngbButton]
+            (click)="removeSkill(i)"
+            class="btn btn-dark">
+      {{skill}}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="readOnly"
+     class="d-flex flex-row flex-wrap">
+  <div *ngFor="let skill of skills; index as i"
+       class="pr-2 pb-2">
+    <div class="btn btn-dark">
+      {{skill}}
+    </div>
+  </div>
+</div>

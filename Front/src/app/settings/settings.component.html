@@ -1,0 +1,99 @@
+<div class="container">
+
+  <h1>Settings</h1>
+
+  <!--Closable alert if set-->
+  <ngb-alert *ngIf="alert !== undefined"
+             [type]="alert.type"
+             (close)="setAlert(-1, '')"
+             style="white-space: pre-line">
+    {{alert.message}}
+  </ngb-alert>
+
+  <!--Hidden default file input with file selection handling-->
+  <input #realFileInput
+         id="profilepic"
+         type="file"
+         accept="image/*"
+         (change)="onFileSelect($event)"
+         style="display:none;" />
+
+  <!--Custom file input-->
+  <div class="form-group row">
+    <label class="col-form-label col-sm-2">Profile Picture</label>
+    <div class="col-sm-5">
+      <div class="input-group">
+
+        <input readonly
+               id="picInput"
+               class="form-control"
+               placeholder="Profile Picture"
+               value="{{fileName}}" />
+        <div class="input-group-append">
+
+          <!--Custom file input browse button uses angular template system-->
+          <button class="btn btn-secondary"
+                  (click)="realFileInput.click()">
+            Browse
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!--File too big error-->
+    <div *ngIf="fileTooBig"
+         class="col-sm col-form-label text-danger"
+         style="font-size: 0.8rem">
+      Sorry! The maximum file size is 1 MB.
+    </div>
+
+  </div>
+
+  <!--Displays and binds input in inputs-->
+  <div *ngFor="let input of inputs; index as i"
+       class="form-group row">
+    <label class="col-form-label col-sm-2">{{input.label}}</label>
+
+    <div class="col-sm-5">
+      <input id="{{input.id}}"
+             class="form-control {{input.valid}}"
+             [(ngModel)]="input.value"
+             placeholder="{{input.label | titlecase}}"
+             type="{{ input.id === 'password' || input.id === 'passwordconf' || input.id === 'newpassword' || input.id === 'newpasswordconf' ? 'password' : 'text' }}"
+             (change)="validate(i)" />
+    </div>
+
+    <!--Displays error for an input, if it has one-->
+    <div *ngIf="input.error !== ''"
+         class="col-sm col-form-label text-danger"
+         style="font-size: 0.8rem">
+      {{input.error}}
+    </div>
+
+  </div>
+
+  <!--Skill builder component-->
+  <app-skills [skills]="skills"
+              [readOnly]="false"></app-skills>
+
+  <!--Offset sign up button-->
+  <div class="row">
+    <div class="col-sm-auto offset-sm-2">
+      <button class="btn btn-primary"
+              (click)="confirm()">
+        Confirm
+      </button>
+      <button class="btn btn-danger ml-2"
+              (click)="delete()">
+        Delete
+      </button>
+    </div>
+    <div *ngIf="deleteReady"
+         class="col-sm no-gutter col-form-label text-danger"
+         style="display: inline-block; font-size: 0.8rem;">
+      Warning: This action cannot be undone. Press delete again to confirm.
+    </div>
+  </div>
+
+</div>

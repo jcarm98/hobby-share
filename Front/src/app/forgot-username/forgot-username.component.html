@@ -1,0 +1,40 @@
+<div class="container">
+
+  <h1>{{heading}}</h1>
+
+  <!--Closable alert if set-->
+  <ngb-alert *ngIf="alert !== undefined"
+             [type]="alert.type"
+             (close)="setAlert(-1)"
+             style="white-space: pre-line">
+    {{alert.message}}
+  </ngb-alert>
+
+  <a routerLink="/forgot/password"
+     class="text-secondary"
+     style="font-size: 0.8rem">
+    Forgot password?
+  </a>
+
+  <div class="form-group row">
+    <div class="col-sm-5 mt-2">
+
+      <div class="input-group">
+
+        <div class="input-group-prepend">
+          <button class="btn btn-primary"
+                  (click)="forgotUsername()">
+            Remind Me
+          </button>
+        </div>
+
+        <input type="text"
+               [(ngModel)]="email"
+               class="form-control"
+               placeholder="Email Address" />
+      </div>
+
+    </div>
+  </div>
+
+</div>

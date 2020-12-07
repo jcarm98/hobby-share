@@ -1,0 +1,131 @@
+<div class="container">
+
+  <div *ngIf="project404 === false || project404 === undefined">
+
+    <div class="row">
+
+      <div class="col">
+        <h1>{{name}}</h1>
+      </div>
+
+      <!--Only display this if the user is logged in and the owner of the project-->
+      <div *ngIf="isOwner"
+           class="col d-flex flex-row-reverse">
+        <a class="btn btn-secondary align-self-center"
+           routerLink="/project/{{id}}/edit">
+          Edit Project
+        </a>
+      </div>
+
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col">
+        <!--Closable alert if set-->
+        <ngb-alert *ngIf="alert !== undefined"
+                   [type]="alert.type"
+                   (close)="setAlert(-1)"
+                   style="white-space: pre-line">
+          {{alert.message}}
+        </ngb-alert>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-auto d-flex justify-content-center">
+        <div *ngIf="res1 === undefined && res2 === undefined"
+             class="bg-secondary border border-primary row no-gutters"
+             style="width: 400px; height: 400px;">
+
+          <h1 *ngIf="name" class="col d-flex justify-content-center align-self-center"
+              style="font-size: 1800%;">
+            {{name.charAt(0) | uppercase}}
+          </h1>
+
+        </div>
+        <div *ngIf="res1 !== undefined"
+             class="d-flex align-items-center border border-success justify-content-center bg-dark"
+             style="width: 400px; height: 400px;">
+          <img [src]="res1"
+               style="display: inline-block; max-height: 100%; max-width: 100%;" />
+        </div>
+      </div>
+      <div class="col-auto d-flex justify-content-center">
+        <div *ngIf="res2 !== undefined"
+             class="d-flex align-items-center border border-success justify-content-center bg-dark"
+             style="width:400px; height: 400px;">
+          <img [src]="res2"
+               style="display: inline-block; max-height: 100%; max-width: 100%;" />
+        </div>
+      </div>
+    </div>
+    <div>Date Created: {{date_created}}</div>
+    <div>Last Updated: {{last_updated}}</div>
+    <div>
+      By: <a class="btn btn-primary"
+             href="/user/{{owner}}">
+        {{owner}}
+      </a>
+    </div>
+    <div *ngIf="contributors && contributors.length > 0">
+      With help from:
+      <span *ngFor="let contrib of contributors; index as i">
+        <a class="btn btn-success"
+           href="/user/{{contrib}}">
+          {{contrib}}
+        </a>
+        {{i !== contributors.length - 1 ? ", " : ""}}
+      </span>
+    </div>
+    <div>Status: <span class="badge badge-primary">{{status}}</span></div>
+    <div *ngIf="!(isOwner || isContributor)">
+      <!--Clicking this adds this user's id to the list of requests, sends an email to owner, and checks if both lists have the same id-->
+      <button class="btn btn-primary"
+              (click)="join()">
+        I want to help
+      </button>
+    </div>
+    <div *ngIf="isContributor">
+      <!--Clicking this removes the user's id from all three lists-->
+      <!--Reloads the page?-->
+      <button class="btn btn-danger"
+              (click)="leave()">
+        Abandon
+      </button>
+    </div>
+    <div *ngIf="isOwner" class="row">
+      <div class="col-sm-6 input-group">
+        <div class="input-group-prepend">
+          <!--Clicking this adds the users id to the list of invites, sends an email to the user, and checks if both lists have the same id-->
+          <button class="btn btn-primary"
+                  (click)="invite()">
+            Invite
+          </button>
+        </div>
+        <input type="text"
+               class="form-control"
+               placeholder="Username"
+               [(ngModel)]="username" />
+      </div>
+    </div>
+
+    <br />
+    <h2>Purpose:</h2>
+    <span style="white-space: pre-wrap;">{{purpose}}</span>
+    <br /><br />
+
+    <h2>Plan:</h2><span style="white-space: pre-wrap;">{{plan}}</span>
+    <br /><br />
+
+    <h4>Required Skills:</h4>
+    <app-skills *ngIf="skills !== undefined"
+                [skills]="skills"
+                [readOnly]="true"></app-skills>
+  </div>
+
+  <div *ngIf="project404">
+    <h1>Project Not Found</h1>
+    <span>Looks like there isn't a project with that id.</span>
+  </div>
+
+</div>

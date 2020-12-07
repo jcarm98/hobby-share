@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-sm navbar-light justify-content-center">
+
+  <ul ngbNav
+      [(activeId)]="activeId"
+      class="navbar-nav flex-row">
+
+    <li *ngFor="let link of links; index as i"
+        class="nav-item"
+        [ngbNavItem]="i">
+
+    <a routerLink="{{link.route}}"
+       class="nav-link p-1"
+       ngbNavLink>
+      {{link.text}}
+      </a>
+
+    </li>
+
+  </ul>
+
+</nav>

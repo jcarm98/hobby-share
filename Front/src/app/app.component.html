@@ -1,0 +1,7 @@
+<app-header [title]="title"
+            [links]="headerLinks"
+            [activeId]="getActiveHeaderId()">
+</app-header>
+<router-outlet></router-outlet>
+<app-footer [links]="footerLinks"
+            [activeId]="getActiveFooterId()"></app-footer>
