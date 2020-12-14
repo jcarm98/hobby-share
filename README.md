@@ -1,2 +1,2 @@
 # HobbyShare.app
-Hobbyshare.app is a social platform to share and collaborate on projects.
+https://hobbyshare.app is a social platform to share and collaborate on projects.
