@@ -1,0 +1,48 @@
+name: Live
+on:
+ # push:
+ #   branches: ["main"]
+ #   tags:
+ #    - "*"
+  workflow_dispatch:
+jobs:
+  test-job:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{secrets.PRIVATE_KEY}}" >> private_key
+      - run: chmod 400 private_key
+    # - run: eval `ssh-agent -s` && ssh-add private_key 
+    # - run: scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key newfile.txt root@${{secrets.SERVER_IP}}:~/newfile.txt
+    # generate and store random string for later use
+      - run: echo $RANDOM | md5sum | head -c 20 > name.txt
+    # run runner helper with random string argument
+      - run: echo "sh ~/runner_helper2 $(cat name.txt)" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    #  - run: ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}} "rm -rf ~/repo && . ~/runner_helper"
+    # go to random string directory
+    # add node to path variable 18.9.0
+    # install yarn, build using yarn
+      - run: echo "cd ~/$(cat name.txt) && export PATH=/home/deploy/.nvm/versions/node/v14.17.5/bin:$PATH && yarn install && yarn build" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    # remove old directory
+    # copy from random string directory to removed directory
+      - run: echo "rm -rf /var/www/staging && cp -r ~/$(cat name.txt)/build /var/www/staging" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    # remove old nginx config
+    # copy nginx config to previous location
+    # restart nginx
+    # remove random string directory
+      - run: echo "rm -rf /etc/nginx/sites-enabled/staging && cp ~/$(cat name.txt)/staging-config /etc/nginx/sites-enabled/staging && sudo /usr/sbin/service nginx restart; rm -rf ~/$(cat name.txt)" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: eval `ssh-agent -s` && ssh-add -D
+      - run: rm private_key
+
+# need to add for hobbyshare stuff:
+# configure angular build command
+# remove old virtual environment, then create new one
+# create virtual environment
+#   python3 -m venv env
+# activate virtual environment
+#   . env/bin/activate
+# install python requirements
+#   pip install -r requirements.txt
+# move backend to location for run_server to find
+# run run_server
+# also need to separate out the front from the back when doing build/moving backend copy

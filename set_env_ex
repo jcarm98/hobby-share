@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export DJANGO_SECRET_KEY='secretkeystring'
+export DJANGO_EMAIL_HOST = 'smtphosturl'
+export DJANGO_EMAIL_HOST_USER = 'smtpaccountemail'
+export DJANGO_EMAIL_HOST_PASSWORD = 'smtpaccounpassword'
+export DJANGO_CONTACT_EMAIL = 'contactemailrecipient'
+export DJANGO_HOST = 'hostname'
+export DJANGO_ENV = 'dev'

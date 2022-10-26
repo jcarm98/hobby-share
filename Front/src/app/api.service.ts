@@ -8,6 +8,7 @@ import { Subject, Observable } from 'rxjs';
 export class ApiService {
 
   private apiUrl = "https://hobbyshare.app:8000";
+  //private apiUrl = "http://localhost:8000";
   private loggedInSource = new Subject<string>();
 
   loggedIn$ = this.loggedInSource.asObservable();

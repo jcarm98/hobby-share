@@ -13,7 +13,6 @@ import { SettingsComponent } from './settings/settings.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { ProjectComponent } from './project/project.component';
 import { EditProjectComponent } from './edit-project/edit-project.component';
-
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [

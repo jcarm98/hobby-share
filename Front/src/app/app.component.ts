@@ -19,6 +19,7 @@ export class AppComponent {
 
   headerLinks: Link[];
 
+  // Footer text does not change
   footerLinks = [
     { route: "/about", text: "About" },
     { route: "/contact", text: "Contact Us" },
@@ -27,6 +28,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.api.loggedIn$.subscribe(res => {
       this.loggedIn = res === "True";
+      // Text and route of header text will change based on login status
       this.headerLinks = this.loggedIn ?
         [
           { route: "/", text: "Home" },
@@ -43,6 +45,7 @@ export class AppComponent {
     this.api.checkLogin();
   }
 
+  // Returns index for highlighting current header text
   getActiveHeaderId(): number {
     switch (this.location.path()) {
       case "":
@@ -60,6 +63,7 @@ export class AppComponent {
     }
   }
 
+  // Returns index for highlighting current footer text
   getActiveFooterId(): number {
     switch (this.location.path()) {
       case "/about":
