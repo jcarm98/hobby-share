@@ -22,7 +22,7 @@ jobs:
     # go to random string directory
     # add node to path variable 18.9.0
     # install yarn, build using yarn
-      - run: echo "cd ~/$(cat name.txt)/Front && export PATH=/home/deploy/.nvm/versions/node/v14.17.5/bin:$PATH && yarn install && yarn ng build" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: echo "cd ~/$(cat name.txt)/Front && export PATH=/home/deploy/.nvm/versions/node/v18.9.0/bin:$PATH && yarn install && yarn ng build" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old directory
     # copy from random string directory to removed directory
     # - run: echo "rm -rf /var/www/hobbyshare && cd ~/$(cat name.txt)/Front/dist && ls >> 0frontdir.txt && cp -r ~/$(cat name.txt)/Front/dist/$(sed -n 2p 0frontdir.txt) /var/www/hobbyshare && rm -rf 0frontdir.txt" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
