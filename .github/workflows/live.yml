@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   deploy-live:
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{secrets.PRIVATE_KEY}}" >> private_key
