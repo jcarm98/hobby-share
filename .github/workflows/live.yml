@@ -25,7 +25,7 @@ jobs:
       - run: echo "cd ~/$(cat name.txt)/Front && export PATH=/home/deploy/.nvm/versions/node/v14.17.5/bin:$PATH && yarn install && yarn ng build" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old directory
     # copy from random string directory to removed directory
-      - run: echo "rm -rf /var/www/hobbyshare && cd ~/$(cat name.txt)/Front/dist && eval \\"cp -r ./$(ls | cat) /var/www/hobbyshare/ \\" " | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: echo "rm -rf /var/www/hobbyshare && cd ~/$(cat name.txt)/Front/dist && cp -r ./$(ls | cat) /var/www/hobbyshare " | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old backend and replace with new backend
       - run: echo "rm -rf ~/hobbyshare && cp -r ~/$(cat name.txt)/Back ~/hobbyshare && cd ~/hobbyshare && python3 -m venv env && . env/bin/activate && pip install -r requirements.txt && . ~/run_server" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old nginx config
