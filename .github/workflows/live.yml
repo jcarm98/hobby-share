@@ -27,7 +27,7 @@ jobs:
     # copy from random string directory to removed directory
       - run: echo "rm -rf /var/www/hobbyshare && cp -r ~/$(cat name.txt)/Front/dist /var/www/hobbyshare" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old backend and replace with new backend
-      - run: echo "rm -rf ~/hobbyshare && cp -r ~/$(cat name.txt)/Back ~/hobbyshare && cd ~/hobbyshare && python3 -m venv env && . env/bin/activate && pip install -r requirements.txt" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: echo "rm -rf ~/hobbyshare && cp -r ~/$(cat name.txt)/Back ~/hobbyshare && cd ~/hobbyshare && python3 -m venv env && . env/bin/activate && pip install -r requirements.txt && . ~/run_server" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
     # remove old nginx config
     # copy nginx config to previous location
     # restart nginx
