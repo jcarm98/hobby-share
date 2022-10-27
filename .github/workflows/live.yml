@@ -6,7 +6,7 @@ on:
  #    - "*"
   workflow_dispatch:
 jobs:
-  test-job:
+  deploy-live:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
