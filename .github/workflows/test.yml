@@ -1,0 +1,38 @@
+name: Deploy Hobby Share Test
+on:
+ # push:
+ #   branches: ["main"]
+ #   tags:
+ #    - "*"
+  workflow_dispatch:
+jobs:
+  deploy-test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{secrets.PRIVATE_KEY}}" >> private_key
+      - run: chmod 400 private_key
+    # - run: eval `ssh-agent -s` && ssh-add private_key 
+    # - run: scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key newfile.txt root@${{secrets.SERVER_IP}}:~/newfile.txt
+    # generate and store random string for later use
+      - run: echo $RANDOM | md5sum | head -c 20 > name.txt
+    # run runner helper with random string argument
+      - run: echo "sh ~/runner_helper_hs $(cat name.txt)" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    #  - run: ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}} "rm -rf ~/repo && . ~/runner_helper"
+    # go to random string directory
+    # add node to path variable 18.9.0
+    # install yarn, build using yarn
+      - run: echo "cd ~/$(cat name.txt)/Front && export PATH=/home/deploy/.nvm/versions/node/v14.17.5/bin:$PATH && yarn install && yarn ng build" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    # remove old directory
+    # copy from random string directory to removed directory
+    # - run: echo "rm -rf /var/www/hobbyshare && cd ~/$(cat name.txt)/Front/dist && ls >> 0frontdir.txt && cp -r ~/$(cat name.txt)/Front/dist/$(sed -n 2p 0frontdir.txt) /var/www/hobbyshare && rm -rf 0frontdir.txt" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: echo "rm -rf /var/www/hobbyshare-test && cp -r ~/$(cat name.txt)/Front/dist /var/www/hobbyshare-test" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    # remove old backend and replace with new backend
+      - run: echo "rm -rf ~/hobbyshare && cp -r ~/$(cat name.txt)/Back ~/hobbyshare && cd ~/hobbyshare && python3 -m venv env && . env/bin/activate && pip install -r requirements.txt && . ~/run_server" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+    # remove old nginx config
+    # copy nginx config to previous location
+    # restart nginx
+    # remove random string directory
+      - run: echo "rm -rf /etc/nginx/sites-enabled/hs-test && cp ~/$(cat name.txt)/test-config /etc/nginx/sites-enabled/hs-test && sudo /usr/sbin/service nginx restart; rm -rf ~/$(cat name.txt)" | ssh -o StrictHostKeyChecking=no -i private_key deploy@${{secrets.SERVER_IP}}
+      - run: eval `ssh-agent -s` && ssh-add -D
+      - run: rm private_key
